@@ -1,7 +1,3 @@
-# Napisz skrypt, który utworzy wolumin nginx_data, 
-# a następnie uruchomi kontener Nginx z tym woluminem zamontowanym
-# w katalogu /usr/share/nginx/html. Zmień zawartość strony html za pomocą utworzonego wolumena.
-
 info() {
   echo -e "\n\033[1;34m[$1]\033[0m $2"
 }
