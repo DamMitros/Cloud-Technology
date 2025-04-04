@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    networks:
+      - frontend_network
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend_network
+      - backend_network
+
+  database:
+    build:
+      context: ./database
+    networks:
+      - backend_network
+
+networks:
+  frontend_network:
+  backend_network:

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> Mikroserwer, który nawet działa!</h1>
+  <p>To jest prosty mikroserwis, który działa w kontenerze Docker.</p>
+  <p>Wystarczy kliknąć przycisk poniżej, aby pobrać dane z backendu.</p>
+  <button id="fetchData">Pobierz dane</button>
+  <pre id="dataOutput"></pre>
+  <script>
+    document.getElementById('fetchData').addEventListener('click', function() {
+      fetch('/api/data')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('dataOutput').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById('dataOutput').textContent = 'Błąd: ' + error;
+        });
+    });
+  </script>
+</body>
+</html>
