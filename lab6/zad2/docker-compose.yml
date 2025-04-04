@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "8080:3000"
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: microservices_demo
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
