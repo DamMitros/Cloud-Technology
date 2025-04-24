@@ -1,0 +1,1 @@
+print("Hello Kubernetes world! -- updated version")
