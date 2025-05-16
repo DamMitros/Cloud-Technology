@@ -1,12 +1,14 @@
 # Lab 10 - Cloud Technology
 
 ## Zadanie 1
+
 - Stworzenie i skonfigurowanie dwóch mikroserwisów (`mikroserwis_a` i `mikroserwis_b`) w klastrze Kubernetes.
 - `mikroserwis_a` odpytuje API `mikroserwis_b`.
 - `mikroserwis_a` jest dostępny lokalnie poprzez Service typu LoadBalancer.
 - Komunikacja między mikroserwisami odbywa się poprzez usługi klastra.
 
 ## Zadanie 2
+
 - Skonfigurowanie aplikacji składającej się z trzech serwisów: `mikroserwis_a`, `mikroserwis_b` i bazy danych (MongoDB).
 - Każdy serwis działa jako oddzielny pod w klastrze.
 - `mikroserwis_a` skalowany do trzech replik.
@@ -16,17 +18,26 @@
 - `mikroserwis_a` jest dostępny z zewnątrz poprzez usługę typu LoadBalancer.
 
 ## Zadanie 3
+
 - Ograniczenie zasobów (pamięć i CPU) dla każdego z podów:
-    - `mikroserwis_a`: max 500Mi pamięci, 0.5 vCPU.
-    - `mikroserwis_b`: max 1Gi pamięci, 1 vCPU.
-    - Baza danych: max 2Gi pamięci, 2 vCPU.
+  - `mikroserwis_a`: max 500Mi pamięci, 0.5 vCPU.
+  - `mikroserwis_b`: max 1Gi pamięci, 1 vCPU.
+  - Baza danych: max 2Gi pamięci, 2 vCPU.
 - Cała konfiguracja zdefiniowana za pomocą plików YAML i aplikowana za pomocą `kubectl`.
 
 ### Wszystkie wymagania z 3 zadań spełnione są w jednym projekcie w katalogu `lab10`.
 
-# Lab 11 
+# Lab 11
 
-## Zadanie 1 
+## Zadanie 1
+
 - **Zabezpieczenie MongoDB hasłem**:
-    - `database_serwis/mongo-secret.yaml` definiujący Kubernetes Secret (`mongo-secret`)
-    - Zmodyfikowanie innych plików aby uwzględniał dane logowania do aplikacji z `mongo-secret`.
+  - `database_serwis/mongo-secret.yaml` definiujący Kubernetes Secret (`mongo-secret`)
+  - Zmodyfikowanie innych plików aby uwzględniał dane logowania do aplikacji z `mongo-secret`.
+
+## Zadanie 2
+
+- **Konfiguracja MongoDB adresem z ConfigMap**:
+  - Stworzenie `database_serwis/mongo-config.yaml` definiującego Kubernetes ConfigMap (`mongo-config`).
+  - Zmodyfikowanie deploymentu `mikroserwis_b` (`mikroserwis_b/deployment.yaml`) aby używał danych z `mongo-config`.
+  - Zmodyfikowanie `mikroserwis_b/app.js` do odczytu adresu i portu ze zmiennych środowiskowych.

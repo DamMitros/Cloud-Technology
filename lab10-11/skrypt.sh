@@ -12,6 +12,7 @@ info "KUBERNETES CLEANUP" "Usuwanie wszystkich istniejących zasobów"
 # kubectl delete pvc mongo-pvc --ignore-not-found
 # kubectl delete pv mongo-pv --ignore-not-found
 # kubectl delete secret mongo-secret --ignore-not-found
+# kubectl delete configmap mongo-config --ignore-not-found
 
 info "DOCKER BUILD (1/2)" "Tworzenie obrazu Docker dla mikroserwisu A"
 docker build -t mikroserwis-a:latest ./mikroserwis_a
@@ -39,6 +40,9 @@ kubectl apply -f database_serwis/mongo-pvc.yaml
 
 info "KUBERNETES APPLY (SECRET| 1.5/4)" "Zastosowanie MongoDB Secret"
 kubectl apply -f database_serwis/mongo-secret.yaml
+
+info "KUBERNETES APPLY (CONFIGMAP| 1.75/4)" "Zastosowanie MongoDB ConfigMap"
+kubectl apply -f database_serwis/mongo-config.yaml
 
 info "KUBERNETES APPLY (2/4)" "Zastosowanie MongoDB"
 kubectl apply -f database_serwis/mongo-deployment.yaml
@@ -94,3 +98,4 @@ kubectl delete service mongo-service --ignore-not-found
 kubectl delete pvc mongo-pvc --ignore-not-found
 kubectl delete pv mongo-pv --ignore-not-found
 kubectl delete secret mongo-secret --ignore-not-found
+kubectl delete configmap mongo-config --ignore-not-found

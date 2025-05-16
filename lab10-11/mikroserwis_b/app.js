@@ -6,15 +6,16 @@ const port = 3001;
 app.use(express.json());
 
 const mongoHost = process.env.MONGO_SERVICE_HOST || 'localhost';
+const mongoPort = process.env.MONGO_SERVICE_PORT || '27017';
 const mongoUser = process.env.MONGO_USER;
 const mongoPass = process.env.MONGO_PASS;
 const dbName = 'mydb'; 
 
 let mongoUrl;
 if (mongoUser && mongoPass) {
-  mongoUrl = `mongodb://${mongoUser}:${mongoPass}@${mongoHost}:27017/${dbName}?authSource=admin`;
+  mongoUrl = `mongodb://${mongoUser}:${mongoPass}@${mongoHost}:${mongoPort}/${dbName}?authSource=admin`;
 } else {
-  mongoUrl = `mongodb://${mongoHost}:27017/${dbName}`;
+  mongoUrl = `mongodb://${mongoHost}:${mongoPort}/${dbName}`;
   console.warn('Connecting to MongoDB without authentication. MONGO_USER and/or MONGO_PASS not set.');
 }
 
