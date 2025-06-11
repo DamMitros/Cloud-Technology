@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  
+      - "15672:15672" 
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - call_center_network
+
+  producer:
+    build: ./producer
+    container_name: producer_app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_HOST: rabbitmq
+    networks:
+      - call_center_network
+    restart: on-failure
+
+  consumer_hipoteczny:
+    build: ./consumer
+    container_name: consumer_hipoteczny
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      QUEUE_NAME: kredyty_hipoteczne
+    networks:
+      - call_center_network
+    restart: on-failure
+
+  consumer_gotowkowy:
+    build: ./consumer
+    container_name: consumer_gotowkowy
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      QUEUE_NAME: kredyty_gotowkowe
+    networks:
+      - call_center_network
+    restart: on-failure
+
+  consumer_firmowy:
+    build: ./consumer
+    container_name: consumer_firmowy
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      QUEUE_NAME: kredyty_firmowe
+    networks:
+      - call_center_network
+    restart: on-failure
+
+networks:
+  call_center_network:
+    driver: bridge
+
+volumes:
+  rabbitmq_data:
