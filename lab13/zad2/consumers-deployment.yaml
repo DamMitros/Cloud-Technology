@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-hipoteczny-deployment
+  labels:
+    app: consumer-hipoteczny
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: consumer-hipoteczny
+  template:
+    metadata:
+      labels:
+        app: consumer-hipoteczny
+    spec:
+      containers:
+      - name: consumer-hipoteczny
+        image: dmitros/zad1-consumer:latest 
+        env:
+        - name: RABBITMQ_HOST
+          value: "rabbitmq-service"
+        - name: QUEUE_NAME
+          value: "kredyty_hipoteczne"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-gotowkowy-deployment
+  labels:
+    app: consumer-gotowkowy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-gotowkowy
+  template:
+    metadata:
+      labels:
+        app: consumer-gotowkowy
+    spec:
+      containers:
+      - name: consumer-gotowkowy
+        image: dmitros/zad1-consumer:latest 
+        env:
+        - name: RABBITMQ_HOST
+          value: "rabbitmq-service"
+        - name: QUEUE_NAME
+          value: "kredyty_gotowkowe"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-firmowy-deployment
+  labels:
+    app: consumer-firmowy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer-firmowy
+  template:
+    metadata:
+      labels:
+        app: consumer-firmowy
+    spec:
+      containers:
+      - name: consumer-firmowy
+        image: dmitros/zad1-consumer:latest
+        env:
+        - name: RABBITMQ_HOST
+          value: "rabbitmq-service"
+        - name: QUEUE_NAME
+          value: "kredyty_firmowe"
